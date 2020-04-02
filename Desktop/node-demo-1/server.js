@@ -23,41 +23,28 @@ var server = http.createServer(function(request, response) {
 
   console.log("方方说：含查询字符串的路径\n" + pathWithQuery);
 
-  if (path === "/") {
-    let string = fs.readFileSync("./index.html", "utf8");
+   if (path === "/") {
     response.statusCode = 200;
     response.setHeader("Content-Type", "text/html;charset=utf-8");
-    response.write(string);
-    response.end();
-  } else if (path === "/main.js") {
-    let string = fs.readFileSync("./main.js", "utf8");
-    response.statusCode = 200;
-    response.setHeader("Content-Type", "text/javascript;charset=utf-8");
-    response.write(string);
-    response.end();
-  } else if (path === "/xxx") {
-    response.statusCode = 200;
-    response.setHeader("Content-Type", "text/json;charset=utf-8");
-    response.setHeader("Access-Control-Allow-Origin", "http://frank.com:8001");
     response.write(`
-    {
-      "note":{
-        "to": "小谷",
-        "from": "方方",
-        "heading": "打招呼",
-        "content": "hi"
-      }
-    }
-    `);
+      <!DOCTYPE html>
+            <head>
+            <link rel="stylesheet"  href="/x">
+            </head>
+            <body>
+               <h1>你好</h1>
+            </body>
+            `);
+    response.end();
+  } else if (path === "/x") {
+    response.statusCode = 200;
+    response.setHeader("Content-Type", "text/css;charset=utf-8");
+    response.write(`body{color: red;}`);
     response.end();
   } else {
     response.statusCode = 404;
     response.setHeader("Content-Type", "text/html;charset=utf-8");
-    response.write(`
-      {
-        "error": "not found"
-      }
-    `);
+    response.write(`你访问的页面不存在`);
     response.end();
   }
 
